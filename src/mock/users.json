@@ -2,74 +2,74 @@
   {
     "id": 1,
     "name":"신수진",
-    "img": "Profile1.png",
+    "img": "assets/images/Profile1.png",
     "state": "난 나고 넌 너야"
 
   },
   {
     "id": 2,
     "name": "이민서",
-    "img":"Profile2.png",
+    "img":"assets/images/Profile2.png",
     "state":"디자인팀 짱짱"
   },
   {
     "id": 3,
     "name": "짱구",
-    "img":"짱구.jpg",
+    "img":"assets/images/짱구.jpg",
     "state":"초코비 하나 더 먹으면 안돼요?"
   },
   {
     "id": 4,
     "name": "철수",
-    "img":"철수.jpg",
+    "img":"assets/images/철수.jpg",
     "state":""
   },
   {
     "id": 5,
     "name": "유리",
-    "img":"유리.jpg",
+    "img":"assets/images/유리.jpg",
     "state":"나랑 소꿉놀이 할 사람"
   },
   {
     "id": 6,
     "name": "맹구",
-    "img":"맹구.jpg",
+    "img":"assets/images/맹구.jpg",
     "state":"별 모양 돌 본 사람 call me"
   },
   {
     "id": 7,
     "name": "훈이",
-    "img":"훈이.jpg",
+    "img":"assets/images/훈이.jpg",
     "state":"민트초코맛있다"
   },
   {
     "id": 8,
     "name": "신형만",
-    "img":"신형만.jpg",
+    "img":"assets/images/신형만.jpg",
     "state":"발냄새 안나요"
   },
   {
     "id": 9,
     "name": "봉미선",
-    "img":"봉미선.jpg",
+    "img":"assets/images/봉미선.jpg",
     "state":"짱구야 빨리 일어나"
   },
   {
     "id": 10,
     "name": "짱아",
-    "img":"짱아.jpg",
+    "img":"assets/images/짱아.jpg",
     "state":""
   },
   {
     "id": 11,
     "name": "흰둥이",
-    "img":"흰둥이.jpg",
+    "img":"assets/images/흰둥이.jpg",
     "state":""
   },
   {
     "id": 12,
-    "name": "유리",
-    "img":"유리.jpg",
+    "name": "수지",
+    "img":"assets/images/수지.jpg",
     "state":"짱구야 사랑해"
   }
 ]

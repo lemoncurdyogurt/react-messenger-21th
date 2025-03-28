@@ -1,20 +1,33 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {useState} from "react";
+import SplashScreen from "./components/SplashScreen";
 import FriendList from "./pages/FriendList";
 import Profile from "./pages/Profile";
 import ChatList from "./pages/ChatList";
 import ChatRoom from "./pages/ChatRoom";
+//import FooterNavigator from "./components/footer/Footer";
+import GlobalStyle from "./styles/GlobalStyle";
 
-function App() {
+const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/friendlist" element={<FriendList />} />
-        <Route path="/profile" element={<Profile />}/>
-        <Route path="/chatlist" element={<ChatList />}/>
-        <Route path="/chatroom/:roomId" element={<ChatRoom />}/>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <GlobalStyle/>
+      {isLoading ? (
+        <SplashScreen onComplete={() => setIsLoading(false)} />
+      ) : (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<FriendList />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/chatlist" element={<ChatList />} />
+            <Route path="/chatroom/:roomId" element={<ChatRoom />} />
+          </Routes>
+        </BrowserRouter>
+      )}
+    </>
   );
-}
+};
 
 export default App;
