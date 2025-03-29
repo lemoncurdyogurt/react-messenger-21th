@@ -32,12 +32,6 @@ interface ChatData {
   allChats: AllChats[];
 }
 
-// User 인터페이스 추가
-interface User {
-  id: number;
-  name: string;
-}
-
 const ChatRoomDetail: React.FC = () => {
   const navigate = useNavigate();
   const { roomId } = useParams<{ roomId: string }>(); // roomId 타입 명시
@@ -65,7 +59,7 @@ const ChatRoomDetail: React.FC = () => {
     if (room) {
       const otherUserId = room.usersId.find((id) => id !== currentUserId);
       const otherUserName = otherUserId
-        ? usersData.find((user: User) => user.id === otherUserId)?.name || "알 수 없는 사용자"
+        ? usersData.find((user) => user.id === otherUserId)?.name || "알 수 없는 사용자"
         : "알 수 없는 사용자";
 
       setChatRoomName(room.name || otherUserName);
@@ -99,7 +93,7 @@ const ChatRoomDetail: React.FC = () => {
 
   const getUserName = (userId: number) => {
     return (
-      usersData.find((user: User) => user.id === userId)?.name || "알 수 없는 사용자"
+      usersData.find((user) => user.id === userId)?.name || "알 수 없는 사용자"
     );
   };
 
@@ -175,28 +169,14 @@ const ChatRoomDetail: React.FC = () => {
     }
   };
 
-  // 타입스크립트에게 onKeyPress의 타입을 명시적으로 알려줌
-  const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  };
-
   const handleBackClick = () => {
     navigate("/chatlist");
   };
 
-  // 스타일 컴포넌트 props 설정 헬퍼 함수
-  const getStyleProps = (isCurrentUser: boolean) => ({ isCurrentUser });
-
   return (
     <S.Container>
       <S.TitleWrapper>
-        <S.BackIcon 
-          src={arrow} 
-          onClick={handleBackClick as unknown as React.MouseEventHandler<HTMLImageElement>} 
-        />
+        <S.BackIcon src={arrow} onClick={handleBackClick} />
         <S.RoomTitle>{chatRoomName}</S.RoomTitle>
       </S.TitleWrapper>
 
@@ -207,17 +187,17 @@ const ChatRoomDetail: React.FC = () => {
             {chatDay.chats.map((message) => (
               <S.MessageWrapper
                 key={message.id}
-                {...getStyleProps(isCurrentUser(message.senderId))}
+                isCurrentUser={isCurrentUser(message.senderId)}
               >
                 {!isCurrentUser(message.senderId) && (
                   <S.SenderName
-                    onClick={() => handleUserSwitch(message.senderId) as unknown as React.MouseEventHandler<HTMLDivElement>}
+                    onClick={() => handleUserSwitch(message.senderId)}
                   >
                     {getUserName(message.senderId)}
                   </S.SenderName>
                 )}
                 <S.MessageContainer
-                  {...getStyleProps(isCurrentUser(message.senderId))}
+                  isCurrentUser={isCurrentUser(message.senderId)}
                 >
                   <S.MessageText>{message.text}</S.MessageText>
                 </S.MessageContainer>
@@ -233,13 +213,9 @@ const ChatRoomDetail: React.FC = () => {
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
           placeholder="메시지를 입력하세요"
         />
-        <S.SendIcon 
-          src={sender} 
-          onClick={sendMessage as unknown as React.MouseEventHandler<HTMLImageElement>} 
-        />
+        <S.SendIcon src={sender} onClick={sendMessage} />
       </S.InputContainer>
     </S.Container>
   );

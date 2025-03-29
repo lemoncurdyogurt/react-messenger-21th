@@ -133,11 +133,14 @@ export const SendIcon = styled.img`
   height: 1.022rem;
   flex-shrink: 0;
 `;
-export const TitleWrapper = styled.div`display: flex;
-align-items: center;
-gap: 0.75rem;`;
+export const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+`;
 
-export const BackIcon = styled.div`
+export const BackIcon = styled.img`
   width: 1.0625rem;
   height: 1.0625rem;
+  flex-shrink: 0;
 `;
