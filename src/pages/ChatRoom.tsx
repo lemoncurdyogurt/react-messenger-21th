@@ -7,6 +7,7 @@ import * as S from "../styles/ChatRoomStyle";
 import sender from "/assets/icons/Send.svg";
 import arrow from "/assets/icons/arrow-left.svg";
 
+// Message와 AllChats 타입 명시
 interface Message {
   id: number;
   senderId: number;
@@ -19,9 +20,10 @@ interface AllChats {
   chats: Message[];
 }
 
+// ChatRoomDetail 컴포넌트 정의
 const ChatRoomDetail: React.FC = () => {
   const navigate = useNavigate();
-  const { roomId } = useParams();
+  const { roomId } = useParams<{ roomId: string }>(); // roomId 타입 명시
   const [chatRoomName, setChatRoomName] = useState<string>("");
   const [allChats, setAllChats] = useState<AllChats[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");

@@ -21,7 +21,7 @@ const ChatRoomList: React.FC = () => {
   
   //해당 유저가 참여하고 있는 채팅방리스트 반환
   useEffect(() => {
-    const filteredRooms = chatRoomsData.filter((room) =>
+    const filteredRooms = chatRoomsData.filter((room: ChatRoom) =>
       room.usersId.includes(currentUserId)
     );
     setChatRooms(filteredRooms);
