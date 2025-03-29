@@ -187,13 +187,16 @@ const ChatRoomDetail: React.FC = () => {
     navigate("/chatlist");
   };
 
-  // 스타일 컴포넌트 props 타입 처리를 위한 함수
+  // 스타일 컴포넌트 props 설정 헬퍼 함수
   const getStyleProps = (isCurrentUser: boolean) => ({ isCurrentUser });
 
   return (
     <S.Container>
       <S.TitleWrapper>
-        <S.BackIcon src={arrow} onClick={handleBackClick} />
+        <S.BackIcon 
+          src={arrow} 
+          onClick={handleBackClick as unknown as React.MouseEventHandler<HTMLImageElement>} 
+        />
         <S.RoomTitle>{chatRoomName}</S.RoomTitle>
       </S.TitleWrapper>
 
@@ -208,7 +211,7 @@ const ChatRoomDetail: React.FC = () => {
               >
                 {!isCurrentUser(message.senderId) && (
                   <S.SenderName
-                    onClick={() => handleUserSwitch(message.senderId)}
+                    onClick={() => handleUserSwitch(message.senderId) as unknown as React.MouseEventHandler<HTMLDivElement>}
                   >
                     {getUserName(message.senderId)}
                   </S.SenderName>
@@ -233,7 +236,10 @@ const ChatRoomDetail: React.FC = () => {
           onKeyPress={handleKeyPress}
           placeholder="메시지를 입력하세요"
         />
-        <S.SendIcon src={sender} onClick={sendMessage} />
+        <S.SendIcon 
+          src={sender} 
+          onClick={sendMessage as unknown as React.MouseEventHandler<HTMLImageElement>} 
+        />
       </S.InputContainer>
     </S.Container>
   );
