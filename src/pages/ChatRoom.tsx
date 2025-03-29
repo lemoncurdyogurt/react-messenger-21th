@@ -32,17 +32,11 @@ interface ChatData {
   allChats: AllChats[];
 }
 
-// 스타일 컴포넌트 Props 타입 정의
-interface MessageWrapperProps {
-  isCurrentUser: boolean;
+// User 인터페이스 추가
+interface User {
+  id: number;
+  name: string;
 }
-
-interface MessageContainerProps {
-  isCurrentUser: boolean;
-}
-
-// 이벤트 핸들러 타입 정의
-interface KeyboardEventProps extends React.KeyboardEvent<HTMLInputElement> {}
 
 const ChatRoomDetail: React.FC = () => {
   const navigate = useNavigate();
@@ -71,7 +65,7 @@ const ChatRoomDetail: React.FC = () => {
     if (room) {
       const otherUserId = room.usersId.find((id) => id !== currentUserId);
       const otherUserName = otherUserId
-        ? usersData.find((user) => user.id === otherUserId)?.name || "알 수 없는 사용자"
+        ? usersData.find((user: User) => user.id === otherUserId)?.name || "알 수 없는 사용자"
         : "알 수 없는 사용자";
 
       setChatRoomName(room.name || otherUserName);
@@ -105,7 +99,7 @@ const ChatRoomDetail: React.FC = () => {
 
   const getUserName = (userId: number) => {
     return (
-      usersData.find((user) => user.id === userId)?.name || "알 수 없는 사용자"
+      usersData.find((user: User) => user.id === userId)?.name || "알 수 없는 사용자"
     );
   };
 
@@ -181,7 +175,8 @@ const ChatRoomDetail: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (e: KeyboardEventProps) => {
+  // 타입스크립트에게 onKeyPress의 타입을 명시적으로 알려줌
+  const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
@@ -191,6 +186,9 @@ const ChatRoomDetail: React.FC = () => {
   const handleBackClick = () => {
     navigate("/chatlist");
   };
+
+  // 스타일 컴포넌트 props 타입 처리를 위한 함수
+  const getStyleProps = (isCurrentUser: boolean) => ({ isCurrentUser });
 
   return (
     <S.Container>
@@ -206,7 +204,7 @@ const ChatRoomDetail: React.FC = () => {
             {chatDay.chats.map((message) => (
               <S.MessageWrapper
                 key={message.id}
-                isCurrentUser={isCurrentUser(message.senderId)}
+                {...getStyleProps(isCurrentUser(message.senderId))}
               >
                 {!isCurrentUser(message.senderId) && (
                   <S.SenderName
@@ -216,7 +214,7 @@ const ChatRoomDetail: React.FC = () => {
                   </S.SenderName>
                 )}
                 <S.MessageContainer
-                  isCurrentUser={isCurrentUser(message.senderId)}
+                  {...getStyleProps(isCurrentUser(message.senderId))}
                 >
                   <S.MessageText>{message.text}</S.MessageText>
                 </S.MessageContainer>
