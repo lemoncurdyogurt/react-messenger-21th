@@ -1,23 +1,24 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {useState} from "react";
+import { useState } from "react";
 import SplashScreen from "./components/SplashScreen";
 import FriendList from "./pages/FriendList";
 import Profile from "./pages/Profile";
 import ChatList from "./pages/ChatList";
 import ChatRoom from "./pages/ChatRoom";
-//import FooterNavigator from "./components/footer/Footer";
 import GlobalStyle from "./styles/GlobalStyle";
+import StatusBar from "./components/StatusBar";
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyle />
       {isLoading ? (
         <SplashScreen onComplete={() => setIsLoading(false)} />
       ) : (
         <BrowserRouter>
+          <StatusBar />
           <Routes>
             <Route path="/" element={<FriendList />} />
             <Route path="/profile" element={<Profile />} />

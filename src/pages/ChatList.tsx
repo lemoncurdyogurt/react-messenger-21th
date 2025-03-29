@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from "react";
-import * as S from "../styles/ChatListStyle";
-import arrowUp from "../assets/icons/arrow-up.svg";
-import arrowDown from "../assets/icons/arrow-down.svg";
-import ChatRoomData from "../mock/Chatroom.json";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import chatRoomsData from "../mock/chatroom.json";
+import usersData from "../mock/users.json";
+import FooterChat from "../components/FooterChat";
 
 interface ChatRoom {
   id: number;
@@ -11,93 +11,51 @@ interface ChatRoom {
   isFixed: boolean;
 }
 
-interface ChatListProps {
-  isOpen: boolean;
-  handleToggle: () => void;
-  chatRooms?: ChatRoom[];
-  handleClick: (id: number) => void;
-}
+const ChatRoomList: React.FC = () => {
+  const navigate = useNavigate();
 
-const ChatList: React.FC<ChatListProps> = ({
-  isOpen,
-  handleToggle,
-  chatRooms = ChatRoomData,
-  handleClick,
-}) => {
-  const [sortType, setSortType] = useState<'all' | 'fixed' | 'unread'>('all');
+  const storedUserId = localStorage.getItem("currentUserId");
+  const currentUserId = storedUserId ? Number(storedUserId) : 1;
 
-  // 디버깅을 위한 콘솔 로그 추가
-  console.log('ChatRooms:', chatRooms);
-  console.log('Is Array:', Array.isArray(chatRooms));
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
+  
+  //해당 유저가 참여하고 있는 채팅방리스트 반환
+  useEffect(() => {
+    const filteredRooms = chatRoomsData.filter((room) =>
+      room.usersId.includes(currentUserId)
+    );
+    setChatRooms(filteredRooms);
+  }, [currentUserId]);
 
-  // 채팅방 정렬 및 필터링 로직
-  const sortedChatRooms = useMemo(() => {
-    // 안전한 배열 변환
-    const rooms = Array.isArray(chatRooms) ? chatRooms : [];
 
-    let filteredRooms = [...rooms];
+  const getChatRoomName = (room: ChatRoom) => {
+    if (room.name) return room.name;
 
-    // 정렬 타입에 따른 필터링
-    switch (sortType) {
-      case 'fixed':
-        filteredRooms = filteredRooms.filter(room => room.isFixed);
-        break;
-      case 'unread':
-        // 미구현: 읽지 않은 메시지 로직 필요
-        break;
-    }
-
-    // 고정된 대화방 먼저, 그 다음 이름순 정렬
-    return filteredRooms.sort((a, b) => {
-      // 고정된 대화방 우선 정렬
-      if (a.isFixed !== b.isFixed) {
-        return a.isFixed ? -1 : 1;
-      }
-      
-      // 이름이 없으면 사용자 ID 기준으로 정렬
-      const nameA = a.name || a.usersId.join(',');
-      const nameB = b.name || b.usersId.join(',');
-      
-      return nameA.localeCompare(nameB);
-    });
-  }, [chatRooms, sortType]);
-
-  // 드롭다운 아이템 클릭 핸들러
-  const handleDropdownItemClick = (type: 'all' | 'fixed' | 'unread') => {
-    setSortType(type);
+    const otherUserId = room.usersId.find((id) => id !== currentUserId);
+    const otherUser = usersData.find((user) => user.id === otherUserId);
+    
+    return otherUser!.name;
   };
 
   return (
-    <S.Container>
-      <S.Title>대화</S.Title>
-      <S.ToggleButton
-        src={isOpen ? arrowUp : arrowDown}
-        alt="toggle"
-        onClick={handleToggle}
-      />
-      <S.DropdownMenu isOpen={isOpen}>
-        <S.DropdownItem onClick={() => handleDropdownItemClick('all')}>
-          전체
-        </S.DropdownItem>
-        <S.DropdownItem onClick={() => handleDropdownItemClick('fixed')}>
-          고정대화순
-        </S.DropdownItem>
-        <S.DropdownItem onClick={() => handleDropdownItemClick('unread')}>
-          안 읽은 메세지 순
-        </S.DropdownItem>
-      </S.DropdownMenu>
-      <S.ChatList>
-        {sortedChatRooms.map((room) => (
-          <S.ChatItem key={room.id} onClick={() => handleClick(room.id)}>
-            <S.ChatName>
-              {room.name || room.usersId.join(',')}
-            </S.ChatName>
-            <S.ChatCount>({room.usersId.length})</S.ChatCount>
-          </S.ChatItem>
-        ))}
-      </S.ChatList>
-    </S.Container>
+    <>
+      <h1>대화</h1>
+      <div>
+        {chatRooms.length > 0 ? (
+          <ul>
+            {chatRooms.map((room) => (
+              <li key={room.id} onClick={() => navigate(`/chatroom/${room.id}`)}>
+                {getChatRoomName(room)}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>참여 중인 채팅방이 없습니다.</p>
+        )}
+      </div>
+      <FooterChat/>
+    </>
   );
 };
 
-export default ChatList;
+export default ChatRoomList;

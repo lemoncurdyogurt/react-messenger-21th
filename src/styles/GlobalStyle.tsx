@@ -21,28 +21,20 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  body {
+  html, body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f0f0f0; /* 배경색 설정 */
   }
 
-  .App {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 375px;
-    height: 812px;
-    background-color: white; /* 원하는 배경색 */
-  }
-  
-  img{
-    width: 2.75rem;
-    height: 2.75rem;
-    object-fit: "cover";
-    object-position: "center";
+  body {
+    background-color: #f0f0f0;
+    width: 100%;
+    height: 100vh;
   }
 `;
 
