@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
-import logo from "../assets/images/스플래쉬.svg";
+import logo from "/assets/images/스플래쉬.svg";
 
 const fadeIn = keyframes`
   from { opacity: 0; }
