@@ -26,6 +26,12 @@ interface ChatRoom {
   usersId: number[];
 }
 
+// ChatData 인터페이스 추가
+interface ChatData {
+  roomId: number;
+  allChats: AllChats[];
+}
+
 const ChatRoomDetail: React.FC = () => {
   const navigate = useNavigate();
   const { roomId } = useParams<{ roomId: string }>(); // roomId 타입 명시
@@ -49,7 +55,7 @@ const ChatRoomDetail: React.FC = () => {
     if (!roomId) return;
 
     // 채팅방 정보 설정
-    const room: ChatRoom | undefined = chatRoomsData.find((room) => room.id === Number(roomId));
+    const room: ChatRoom | undefined = chatRoomsData.find((room: ChatRoom) => room.id === Number(roomId));
     if (room) {
       const otherUserId = room.usersId.find((id) => id !== currentUserId);
       const otherUserName = otherUserId
@@ -70,7 +76,7 @@ const ChatRoomDetail: React.FC = () => {
         setAllChats([]);
       }
     } else {
-      const roomChats = chatsData.find((chat) => chat.roomId === Number(roomId));
+      const roomChats = chatsData.find((chat: ChatData) => chat.roomId === Number(roomId));
       setAllChats(roomChats ? roomChats.allChats : []);
     }
   }, [roomId, currentUserId]);
@@ -148,12 +154,12 @@ const ChatRoomDetail: React.FC = () => {
     // 현재 대화방에 새 사용자가 포함되어 있는지 확인
     if (roomId) {
       const currentRoom = chatRoomsData.find(
-        (room) => room.id === Number(roomId)
+        (room: ChatRoom) => room.id === Number(roomId)
       );
 
       // 현재 방에 새 사용자가 없다면 새 사용자가 속한 다른 방으로 이동
       if (currentRoom && !currentRoom.usersId.includes(newUserId)) {
-        const newRoom = chatRoomsData.find((room) =>
+        const newRoom = chatRoomsData.find((room: ChatRoom) =>
           room.usersId.includes(newUserId)
         );
         if (newRoom) {
