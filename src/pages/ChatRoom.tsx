@@ -32,6 +32,18 @@ interface ChatData {
   allChats: AllChats[];
 }
 
+// 스타일 컴포넌트 Props 타입 정의
+interface MessageWrapperProps {
+  isCurrentUser: boolean;
+}
+
+interface MessageContainerProps {
+  isCurrentUser: boolean;
+}
+
+// 이벤트 핸들러 타입 정의
+interface KeyboardEventProps extends React.KeyboardEvent<HTMLInputElement> {}
+
 const ChatRoomDetail: React.FC = () => {
   const navigate = useNavigate();
   const { roomId } = useParams<{ roomId: string }>(); // roomId 타입 명시
@@ -169,7 +181,7 @@ const ChatRoomDetail: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyPress = (e: KeyboardEventProps) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage();
