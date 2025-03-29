@@ -20,7 +20,12 @@ interface AllChats {
   chats: Message[];
 }
 
-// ChatRoomDetail 컴포넌트 정의
+interface ChatRoom {
+  id: number;
+  name: string;
+  usersId: number[];
+}
+
 const ChatRoomDetail: React.FC = () => {
   const navigate = useNavigate();
   const { roomId } = useParams<{ roomId: string }>(); // roomId 타입 명시
@@ -44,12 +49,11 @@ const ChatRoomDetail: React.FC = () => {
     if (!roomId) return;
 
     // 채팅방 정보 설정
-    const room = chatRoomsData.find((room) => room.id === Number(roomId));
+    const room: ChatRoom | undefined = chatRoomsData.find((room) => room.id === Number(roomId));
     if (room) {
       const otherUserId = room.usersId.find((id) => id !== currentUserId);
       const otherUserName = otherUserId
-        ? usersData.find((user) => user.id === otherUserId)?.name ||
-          "알 수 없는 사용자"
+        ? usersData.find((user) => user.id === otherUserId)?.name || "알 수 없는 사용자"
         : "알 수 없는 사용자";
 
       setChatRoomName(room.name || otherUserName);
@@ -66,9 +70,7 @@ const ChatRoomDetail: React.FC = () => {
         setAllChats([]);
       }
     } else {
-      const roomChats = chatsData.find(
-        (chat) => chat.roomId === Number(roomId)
-      );
+      const roomChats = chatsData.find((chat) => chat.roomId === Number(roomId));
       setAllChats(roomChats ? roomChats.allChats : []);
     }
   }, [roomId, currentUserId]);
