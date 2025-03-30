@@ -27,7 +27,7 @@ const UserProvider: React.FC = () => {
       <div id="currentUser">
         {currentUser ? (
           <>
-            <img src={currentUser.img} alt={currentUser.name} />
+            <img src={currentUser.img} alt={currentUser.name} style={{ width: "3.125rem", height: "3.125rem" }}/>
             <p>{currentUser.name}</p>
             <p>{currentUser.state || []}</p>
           </>
