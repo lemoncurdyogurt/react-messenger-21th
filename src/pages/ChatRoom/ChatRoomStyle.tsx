@@ -88,7 +88,6 @@ export const MessageContainer = styled.div<{ isCurrentUser: boolean }>`
   border-radius: 10px;
   background: ${({ isCurrentUser }) => (isCurrentUser ? "#4cd964" : "#e4e4e4")};
   margin-bottom: 1rem;
-  max-width: 9.0625rem;
   position: relative;
 `;
 

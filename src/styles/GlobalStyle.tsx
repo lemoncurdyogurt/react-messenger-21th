@@ -3,38 +3,35 @@ import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-  	@font-face {
-		font-family : 'Pretendard';
-		src : url('../src/assets/fonts/Pretendard-Regular.woff2');
-		font-style: normal;
-    }
-    @font-face {
-      font-family : 'Pretendard ExtraBold';
-      src : url('../src/assets/fonts/Pretendard-ExtraBold.woff2');
-        font-style: normal;
-    }
 
-  * {
-    font-family: 'Pretendard', sans-serif;
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  html, body {
+    width: 100%;
+    height: 100%;
   }
 
-  html, body{
-    height: 100%;
+  #root {
+  width: 375px;
+  min-height: 100%;
+  margin: 0 auto;
+  background: white;
+  position: relative;
+  }
+
+  * {
+    box-sizing: border-box;
+    font-family: 'Pretendard Variable', sans-serif;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   body {
+    max-height: 100vh;
     background-color: #f0f0f0;
-    width: 100%;
-    height: 100vh;
+    overflow-x: hidden; /* 좌우 넘침 방지 */
+    overflow-y: auto;
+    display: flex;
+    justify-content: center; /* 가로 가운데 정렬 */
+    align-items: center;      /* 세로 가운데 정렬 */
   }
 `;
 

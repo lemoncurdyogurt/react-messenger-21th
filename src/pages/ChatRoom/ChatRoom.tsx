@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import chatRoomsData from "../mock/chatroom.json";
-import usersData from "../mock/users.json";
-import chatsData from "../mock/chat.json";
-import * as S from "../styles/ChatRoomStyle";
-import sender from "/assets/icons/Send.svg";
-import arrow from "/assets/icons/arrow-left.svg";
+import chatRoomsData from "../../mock/chatroom.json";
+import usersData from "../../mock/users.json";
+import chatsData from "../../mock/chat.json";
+import * as S from "./ChatRoomStyle";
+//import sender from "/assets/icons/Send.svg";
+import arrow from "../../assets/icons/Chat/arrowLeft.svg";
 
 // Message와 AllChats 타입 명시
 interface Message {
@@ -55,11 +55,14 @@ const ChatRoomDetail: React.FC = () => {
     if (!roomId) return;
 
     // 채팅방 정보 설정
-    const room: ChatRoom | undefined = chatRoomsData.find((room: ChatRoom) => room.id === Number(roomId));
+    const room: ChatRoom | undefined = chatRoomsData.find(
+      (room: ChatRoom) => room.id === Number(roomId)
+    );
     if (room) {
       const otherUserId = room.usersId.find((id) => id !== currentUserId);
       const otherUserName = otherUserId
-        ? usersData.find((user) => user.id === otherUserId)?.name || "알 수 없는 사용자"
+        ? usersData.find((user) => user.id === otherUserId)?.name ||
+          "알 수 없는 사용자"
         : "알 수 없는 사용자";
 
       setChatRoomName(room.name || otherUserName);
@@ -76,7 +79,9 @@ const ChatRoomDetail: React.FC = () => {
         setAllChats([]);
       }
     } else {
-      const roomChats = chatsData.find((chat: ChatData) => chat.roomId === Number(roomId));
+      const roomChats = chatsData.find(
+        (chat: ChatData) => chat.roomId === Number(roomId)
+      );
       setAllChats(roomChats ? roomChats.allChats : []);
     }
   }, [roomId, currentUserId]);
@@ -215,7 +220,7 @@ const ChatRoomDetail: React.FC = () => {
           onChange={(e) => setNewMessage(e.target.value)}
           placeholder="메시지를 입력하세요"
         />
-        <S.SendIcon src={sender} onClick={sendMessage} />
+        <S.SendIcon src={arrow} onClick={sendMessage} />
       </S.InputContainer>
     </S.Container>
   );

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import chatRoomsData from "../mock/chatroom.json";
-import usersData from "../mock/users.json";
-import FooterChat from "../components/FooterChat";
+import chatRoomsData from "../../mock/chatroom.json";
+import usersData from "../../mock/users.json";
+import * as S from "../ChatList/ChatList.styled";
+import ChatListHeader from "../../components/ChatHeader"
 
 interface ChatRoom {
   id: number;
@@ -39,21 +40,23 @@ const ChatRoomList: React.FC = () => {
 
   return (
     <>
-      <h1>대화</h1>
-      <div>
+      <ChatListHeader />
+      <S.ChatSearchWrapper className="search" action="" method="get">
+        <S.ChatSearch className="searchtxt" placeholder="검색" />
+      </S.ChatSearchWrapper>
+      <S.ChatContainer>
         {chatRooms.length > 0 ? (
-          <ul>
+          <S.ChatList>
             {chatRooms.map((room) => (
-              <li key={room.id} onClick={() => navigate(`/chatroom/${room.id}`)}>
+              <S.ChatListItem key={room.id} onClick={() => navigate(`/chatroom/${room.id}`)}>
                 {getChatRoomName(room)}
-              </li>
+              </S.ChatListItem>
             ))}
-          </ul>
+          </S.ChatList>
         ) : (
-          <p>참여 중인 채팅방이 없습니다.</p>
+          <S.EmptyMessage>참여 중인 채팅방이 없습니다.</S.EmptyMessage>
         )}
-      </div>
-      <FooterChat/>
+      </S.ChatContainer>
     </>
   );
 };
