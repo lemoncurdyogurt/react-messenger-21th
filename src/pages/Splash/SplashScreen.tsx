@@ -12,12 +12,11 @@ const SplashScreen = ({ onComplete }: { onComplete: () => void }) => {
 
   return (
     <S.SplashContainer>
-      <S.Screen>
-        <S.TitleWrapper>
-          <S.Title>LINE</S.Title>
-          <S.SubTitle>Talk</S.SubTitle>
-        </S.TitleWrapper>
-      </S.Screen>
+      <S.Background src="/images/Splash.svg" alt="splash" />
+      <S.TitleWrapper>
+        <S.Title>LINE</S.Title>
+        <S.SubTitle>TALK</S.SubTitle>
+      </S.TitleWrapper>
     </S.SplashContainer>
   );
 };
